@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
+import firebase from '../firebase/firebaseConfig';
 
 export interface User {
+  // user: firebase.User | null | undefined;
   uid: string | null;
+  name: string | null;
 }
 
-const initialState: User = { uid: null };
+const initialState: User = { uid: null, name: null };
 
 export const userSlice = createSlice({
   name: "user",

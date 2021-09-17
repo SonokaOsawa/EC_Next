@@ -9,7 +9,7 @@ import { store } from "../features/store";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser,  loginUser, logoutUser } from '../features/user';
 import Header from '../components/molecule/Header';
-// import { AuthProvider } from '../firebase/Auth';
+import { AuthProvider } from '../firebase/Auth';
 
 function MyApp({ Component, pageProps }: AppProps) {
   // const dispatch = useDispatch()
@@ -26,10 +26,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   // }, [dispatch])
   return (
     <Provider store={store}>
-      {/* <AuthProvider> */}
+      <AuthProvider>
       <Header/>
       <Component {...pageProps} />
-      {/* </AuthProvider> */}
+      </AuthProvider>
     </Provider>
   )
 }

@@ -3,11 +3,12 @@ import { FC } from 'react';
 interface Props {
     text: string
     onClick: () => void
+    classname: string
 }
 
-const Btn: FC<Props> = ({text, onClick}) => {
+const Btn: FC<Props> = ({text, onClick, classname}) => {
     return (
-        <button onClick={onClick}>{text}</button>
+        <button onClick={onClick} className={classname}>{text}</button>
     )
 }
 
