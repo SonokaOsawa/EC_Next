@@ -3,14 +3,24 @@ import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import SearchItems from '../components/molecule/SearchItems';
 import { useDispatch, useSelector } from "react-redux";
-import { selectItems } from '../features/items';
+import { selectItems, Itemtype } from '../features/items';
 import Items from '../components/organisms/items';
+import { GetStaticProps, NextPage } from "next";
+import admin from '../firebase/nodeApp';
+import { useState } from 'react';
 
-export default function Home() {
+interface Props {
+  items: Itemtype[]
+}
+
+const Home: NextPage<Props> = (props) => {
+  const items = props.items
+  // const items = useSelector(selectItems)
+  const [searchItems, serSearchitems] = useState<Itemtype[]>(items)
   const search = (word: string | undefined) => {
     console.log('検索')
+    // if(word)
   }
-  const items = useSelector(selectItems)
 
   return (
     <div>
@@ -21,10 +31,8 @@ export default function Home() {
       </Head>
 
       <main>
-        <div>
         <SearchItems search={search}/>
         <Items items={items} />
-        </div>
       </main>
 
       <footer className={styles.footer}>
@@ -42,3 +50,26 @@ export default function Home() {
     </div>
   )
 }
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  let items: Itemtype[] = [];
+  const ref= await admin.firestore().collection('items').get();
+  ref.docs.map(doc => {
+    const data = { 
+      id: doc.data().id, 
+      name: doc.data().name,
+      des: doc.data().des,
+      pm: doc.data().pm,
+      pl: doc.data().pl,
+      img: doc.data().img
+    };
+    items.push(data);
+  });
+  return{
+    props: {
+      items
+    }
+  }
+}
+
+export default Home;

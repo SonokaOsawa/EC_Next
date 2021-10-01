@@ -11,9 +11,9 @@ const Header: FC = () => {
     const { currentUser } = useContext(AuthContext);
     const user = useSelector(selectUser)
 
-    useEffect(() => {
-        currentUser && router.push('/')
-      }, [currentUser]);
+    // useEffect(() => {
+    //     currentUser
+    //   }, [currentUser]);
     const login = () => {
         const provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithRedirect(provider);
