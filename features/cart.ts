@@ -53,8 +53,14 @@ export const getCart = (uid: string): AppThunk => (dispatch): void => {
     })
 }
 
-export const newCart = (cart: Carttype, uid: string): AppThunk => 
+export const newCart = (cartitem: Iteminfotype[], uid: string): AppThunk => 
     (dispatch): void => {
+        let cart: Carttype = {
+            id: new Date().getTime().toString(),
+            uid: uid,
+            status: 0,
+            iteminfo: [...cartitem]
+        };
     firebase
     .firestore()
     .collection(`users/${uid}/orders`)
@@ -65,14 +71,30 @@ export const newCart = (cart: Carttype, uid: string): AppThunk =>
     })
 }
 
-export const addCart = (cart: Carttype, uid: string): AppThunk =>
+export const addCart = (cart: Carttype, uid: string, cartitem: Iteminfotype[]): AppThunk =>
     (dispatch): void => {
         firebase
         .firestore()
         .collection(`users/${uid}/orders`)
         .doc(cart.id)
-        .update(cart)
+        .update({ iteminfo: firebase.firestore.FieldValue.arrayUnion(...cartitem)})
         .then(() => {
-            dispatch(setCart(cart))
+            let newcart: Carttype = { ... cart }
+            newcart.iteminfo = [...cart.iteminfo, ...cartitem]
+            dispatch(setCart(newcart))
+        })
+}
+
+export const deleteCartitem = (cartitem: Iteminfotype, uid: string, cart: Carttype): AppThunk =>
+    (dispatch): void => {
+        firebase
+        .firestore()
+        .collection(`users/${uid}/orders`)
+        .doc(cart.id)
+        .update({ iteminfo: firebase.firestore.FieldValue.arrayRemove(cartitem) })
+        .then(() => {
+            let newcart: Carttype = { ...cart }
+            newcart.iteminfo = cart.iteminfo.filter((item) => item.id !== cartitem.id)
+            dispatch(setCart(newcart))
         })
     }

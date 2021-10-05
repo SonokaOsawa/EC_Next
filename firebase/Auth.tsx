@@ -20,7 +20,6 @@ const AuthProvider: FC = ({ children }) => {
         firebase.auth().onAuthStateChanged((user) => {
           // ログイン状態が変化すると呼ばれる
           setCurrentUser(user);
-          // dispatch(getItems());
           if(user) {
             let uid = user.uid
             let name = user.displayName
@@ -31,6 +30,7 @@ const AuthProvider: FC = ({ children }) => {
               dispatch(resetCart())
           }
         })
+        dispatch(getItems());
       }, [dispatch]);
     return (
         <AuthContext.Provider value={{ currentUser: currentUser }}>

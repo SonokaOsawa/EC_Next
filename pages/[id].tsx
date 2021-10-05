@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Itemtype } from '../features/items';
-import { Carttype, newCart, selectCart, getCart, resetCart, addCart, setCart } from '../features/cart';
+import { Carttype, newCart, selectCart, getCart, resetCart, addCart, setCart, Iteminfotype } from '../features/cart';
 import Image from 'next/image';
 import Btn from '../components/atom/Btn';
 import Price from '../components/atom/Price';
@@ -26,36 +26,30 @@ const Itemdetail: NextPage<Props> = (props) => {
         total = props.item.pl * Number(buyNum)
     }
     const addCartBtn = () => {
-        let cartItem: Carttype = {
-            id: new Date().getTime().toString(),
-            uid: user.uid,
-            status: 0,
-            iteminfo:[{
+        let cartItem: Iteminfotype = {
                 id: new Date().getTime().toString(16),
                 itemId: props.item.id,
                 buynum: Number(buyNum),
                 size: size,
                 price: total
-            }]
-        }
-        let info = [...cart.iteminfo, cartItem.iteminfo[0]]
-        let data: Carttype = {
-            id: cart.id,
-            uid: user.uid,
-            status: 0,
-            iteminfo: info
         }
         if(user.uid){
             if(Object.keys(cart).length === 0){
-                dispatch(newCart(cartItem, user.uid))
+                dispatch(newCart([cartItem], user.uid))
             }else{
-                dispatch(addCart(data, user.uid))
+                dispatch(addCart(cart, user.uid, [cartItem]))
             }
         }else {
             if(Object.keys(cart).length === 0){
-                dispatch(setCart(cartItem))
+                let newcart = {
+                    iteminfo: [cartItem],
+                    status: 0
+                }
+                dispatch(setCart(newcart))
             } else {
-                dispatch(setCart(data))
+                let newcart = cart
+                newcart.iteminfo.push(cartItem)
+                dispatch(setCart(newcart))
             }
         }
     }
