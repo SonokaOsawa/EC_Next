@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { Itemtype } from '../../features/items';
-import { useRouter } from "next/router";
 import Image from 'next/image';
 import Link from 'next/link'
 
@@ -19,7 +18,7 @@ const Item: FC<Props> = ({ item }) => {
                         {item.name}
                     </h3>
                     <p className="mt-1 text-lg font-medium text-gray-900">
-                        {item.pm}
+                        {item.pm}円
                     </p>
                 </a>
         </Link>

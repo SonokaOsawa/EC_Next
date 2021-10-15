@@ -25,21 +25,21 @@ export const CartItems: FC<Props> = ({items}) => {
         }
     }
     return (
-        <div>
+        <div className="bg-gray-200">
             {cart.iteminfo.map((cartitem) => (
                 <div key={cartitem.id}>
                     {items.filter(item => {
                         return cartitem.itemId === item.id
                     }).map((ci) => (
                         <div className="grid grid-cols-3 gap-4" key={ci.id}>
-                            <div className="col-span-1">
-                                <Image alt="cartimage" src={`/${ci.img}`} width={200} height={200} />
+                            <div className="col-span-1 pt-1">
+                                <Image alt="cartimage" src={`/${ci.img}`} width={200} height={200}/>
                             </div>
-                            <div className="col-span-1">
+                            <div className="col-span-1 pt-1">
                                 <p>{ci.name}</p>
                                 <p>数量：{cartitem.buynum}</p>
                             </div>
-                            <div className="col-span-1">
+                            <div className="col-span-1 pt-1">
                                 <Price price={cartitem.price}/>
                                 <Btn onClick={() => deleteBtn(cartitem)} classname="items-center shadow border-blue-500 border-2 rounded-full  px-4 py-2 text-blue-500 hover:bg-blue-500 hover:text-white"　text="削除" />
                             </div>

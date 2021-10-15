@@ -114,8 +114,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context: GetStaticPr
     return {
         props: {
             item
-        },
-        revalidate: 10
+        }
     }
 }
 

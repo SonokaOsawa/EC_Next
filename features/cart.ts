@@ -36,7 +36,7 @@ export const cartSlice = createSlice({
 export const { setCart, resetCart } = cartSlice.actions;
 export const selectCart = (state: RootState) => state.cart;
 
-export default cartSlice.reducer
+export default cartSlice.reducer;
 
 export const getCart = (uid: string): AppThunk => (dispatch): void => {
     firebase

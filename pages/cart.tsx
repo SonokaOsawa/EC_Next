@@ -6,6 +6,7 @@ import {CartItems} from "../components/molecule/CartItems";
 import { selectItems } from '../features/items';
 import { selectCart } from "../features/cart";
 import { CartPrice } from "../components/molecule/CartPrice";
+import { OrderForm } from "../components/organisms/OrderForm";
 
 const ShoppingCart = () => {
     const items = useSelector(selectItems)
@@ -14,13 +15,16 @@ const ShoppingCart = () => {
         <div>
             {cart.iteminfo !== undefined ? (
                 cart.iteminfo.length !== 0 ? (
-                    <div className="grid grid-cols-3 gap-4">
-                        <div className="col-span-2 text-gray-700 text-center bg-gray-200">
+                    <div>
+                    <div className="flex content-start">
+                        <div className="w-2/3 p-2 text-gray-700 text-center">
                             <CartItems items={items}/>
                         </div>
-                        <div className="col-span-1 text-gray-700 text-center">
+                        <div className="w-1/3 p-2 text-gray-700 text-center">
                             <CartPrice/>
                         </div>
+                    </div>
+                        <OrderForm/>
                     </div>
                 ) : (
                     <div>カートに商品がありません</div>
