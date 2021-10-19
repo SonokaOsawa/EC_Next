@@ -6,7 +6,7 @@ import Btn from '../components/atom/Btn';
 import Price from '../components/atom/Price';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext, NextPage } from "next";
 import admin from '../firebase/nodeApp';
-import { selectUser,  loginUser, logoutUser } from '../features/user';
+import { selectUser, loginUser, logoutUser } from '../features/user';
 import { useDispatch, useSelector } from "react-redux";
 
 interface Props {
@@ -47,8 +47,8 @@ const Itemdetail: NextPage<Props> = (props) => {
                 }
                 dispatch(setCart(newcart))
             } else {
-                let newcart = cart
-                newcart.iteminfo.push(cartItem)
+                let newcart: Carttype = JSON.parse(JSON.stringify(cart));
+                newcart.iteminfo.push(cartItem);
                 dispatch(setCart(newcart))
             }
         }

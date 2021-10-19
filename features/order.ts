@@ -3,6 +3,7 @@ import { RootState } from "./store";
 import firebase from '../firebase/firebaseConfig';
 import { AppThunk } from "./store";
 import { Carttype } from "./cart";
+import { resetCart } from "./cart";
 
 export interface Ordertype extends Carttype{
     name?: string,
@@ -13,9 +14,10 @@ export interface Ordertype extends Carttype{
     orderdate?: string,
     deliveryDate?: string,
     deliveryTime?: string,
-    paymethod?: number,
+    paymethod?: string,
     card?: string,
-    totalPrice?: number
+    totalPrice?: number,
+    timestamp?: number
 }
 
 const initialState: Ordertype[] = []
@@ -51,5 +53,29 @@ export const getOrder = (uid: string): AppThunk => (dispatch): void => {
                 dispatch(setOrder(order))
             }
         })
+    })
+}
+
+export const order = (neworder: Ordertype): AppThunk => dispatch => {
+    firebase
+    .firestore()
+    .collection(`users/${neworder.uid}/orders`)
+    .doc(neworder.id)
+    .update(neworder)
+    .then(() => {
+        dispatch(setOrder(neworder))
+        dispatch(resetCart())
+    })
+}
+
+export const cancel = (order: Ordertype): AppThunk => dispatch => {
+    firebase
+    .firestore()
+    .collection(`users/${order.uid}/orders`)
+    .doc(order.id)
+    .update({status: 9})
+    .then(() => {
+        dispatch(resetOrder())
+        dispatch(getOrder(order.uid))
     })
 }

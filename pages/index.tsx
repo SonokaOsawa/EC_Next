@@ -16,10 +16,25 @@ interface Props {
 const Home: NextPage<Props> = (props) => {
   const items = props.items
   // const items = useSelector(selectItems)
-  const [searchItems, serSearchitems] = useState<Itemtype[]>(items)
+  const [searchItems, setSearchitems] = useState<Itemtype[]>(items)
+  const [noSearch, setNosearch] = useState(false)
   const search = (word: string | undefined) => {
     console.log('検索')
-    // if(word)
+    console.log(word)
+    if(word === "" || word === undefined){
+      setSearchitems(items)
+      setNosearch(false)
+    }else{
+      let searchArray = searchItems.filter((item) => {
+        return item.name.indexOf(word) >= 0
+      })
+      if(searchArray.length === 0){
+        setNosearch(true)
+      }else{
+        setSearchitems(searchArray)
+        setNosearch(false)
+      }
+    }
   }
 
   return (
@@ -32,7 +47,7 @@ const Home: NextPage<Props> = (props) => {
 
       <main>
         <SearchItems search={search}/>
-        <Items items={items} />
+        <Items items={searchItems} noSearch={noSearch}/>
       </main>
 
       <footer className={styles.footer}>
