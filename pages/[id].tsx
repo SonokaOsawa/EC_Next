@@ -5,9 +5,10 @@ import Image from 'next/image';
 import Btn from '../components/atom/Btn';
 import Price from '../components/atom/Price';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext, NextPage } from "next";
-import admin from '../firebase/nodeApp';
+// import admin from '../firebase/nodeApp';
 import { selectUser } from '../features/user';
 import { useDispatch, useSelector } from "react-redux";
+import firebase from "../firebase/firebaseConfig";
 
 interface Props {
     item: Itemtype;
@@ -92,7 +93,7 @@ const Itemdetail: NextPage<Props> = (props) => {
 
 export const getStaticProps: GetStaticProps<Props> = async (context: GetStaticPropsContext) => {
     let items: Itemtype[] = [];
-    const ref= await admin.firestore().collection('items').get();
+    const ref= await firebase.firestore().collection('items').get();
     ref.docs.map(doc => {
         const data = { 
             id: doc.data().id, 
@@ -121,7 +122,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context: GetStaticPr
 export const getStaticPaths: GetStaticPaths = async () => {
     let items = [];
     let paths = []
-    const ref= await admin.firestore().collection('items').get();
+    const ref= await firebase.firestore().collection('items').get();
     ref.docs.map(doc => {
         const data = { 
             id: doc.data().id, 

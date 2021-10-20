@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectItems, Itemtype } from '../features/items';
 import Items from '../components/organisms/items';
 import { GetStaticProps, NextPage } from "next";
-import admin from '../firebase/nodeApp';
+// import admin from '../firebase/nodeApp';
 import { useState } from 'react';
+import firebase from "../firebase/firebaseConfig";
 
 interface Props {
   items: Itemtype[]
@@ -55,7 +56,7 @@ const Home: NextPage<Props> = (props) => {
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   let items: Itemtype[] = [];
-  const ref= await admin.firestore().collection('items').get();
+  const ref= await firebase.firestore().collection('items').get();
   ref.docs.map(doc => {
     const data = { 
       id: doc.data().id, 
