@@ -56,7 +56,7 @@ const Itemdetail: NextPage<Props> = (props) => {
     return (
         <div>
             <h2>{props.item.name}</h2>
-            <Image src={`/${props.item.img}`} alt="itemDetail" width={400} height={400}/>
+            <Image src={`/${props.item.img}`} alt="itemDetail" width={400} height={400}　className="rounded-lg"/>
             <p>{props.item.des}</p>
             <p>サイズ</p>
             <label>
