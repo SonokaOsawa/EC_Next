@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <AuthProvider>
       <Header/>
       <div className="bg-white">
-        <div className="max-w-2xl mx-auto py-10 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-6">
+        <div className="max-w-2xl mx-auto px-4 py-2 sm:px-6 lg:max-w-7xl lg:px-6">
       <Component {...pageProps} />
       </div>
       </div>
