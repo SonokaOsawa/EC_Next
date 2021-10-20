@@ -6,7 +6,7 @@ import Btn from '../components/atom/Btn';
 import Price from '../components/atom/Price';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext, NextPage } from "next";
 import admin from '../firebase/nodeApp';
-import { selectUser, loginUser, logoutUser } from '../features/user';
+import { selectUser } from '../features/user';
 import { useDispatch, useSelector } from "react-redux";
 
 interface Props {
