@@ -1,13 +1,15 @@
 import { FC } from 'react';
 import { Itemtype } from '../../features/items';
 import Image from 'next/image';
-import Link from 'next/link'
+import Link from 'next/link';
+import Price from "../atom/Price";
 
 interface Props {
     item: Itemtype;
 }
 
 const Item: FC<Props> = ({ item }) => {
+    const itemPrice = item.pm * 1.1
     return (
         <Link href={`/${item.id}`} passHref>
                 <div className="group">
@@ -18,7 +20,7 @@ const Item: FC<Props> = ({ item }) => {
                         {item.name}
                     </h3>
                     <p className="mt-1 text-base font-medium text-gray-900">
-                        {item.pm}円
+                        <Price price={itemPrice}/>(税込)
                     </p>
                 </div>
         </Link>

@@ -20,11 +20,13 @@ const Itemdetail: NextPage<Props> = (props) => {
     const cart = useSelector(selectCart)
     const [size, setSize] = useState('M')
     const [buyNum, setBuynum] = useState('1')
-    let total = props.item.pm
+    const priceM = props.item.pm * 1.1
+    const priceL = props.item.pl * 1.1
+    let total = priceM
     if(size === 'M'){
-        total = props.item.pm * Number(buyNum)
+        total = priceM * Number(buyNum)
     }else{
-        total = props.item.pl * Number(buyNum)
+        total = priceL * Number(buyNum)
     }
     const addCartBtn = () => {
         let cartItem: Iteminfotype = {
@@ -56,19 +58,19 @@ const Itemdetail: NextPage<Props> = (props) => {
     }
     return (
         <div>
-            <h2>{props.item.name}</h2>
+            <h2 className="text-center text-3xl text-red-300">{props.item.name}</h2>
             <Image src={`/${props.item.img}`} alt="itemDetail" width={400} height={400}　className="rounded-lg"/>
             <p>{props.item.des}</p>
             <p>サイズ</p>
             <label>
                 <input type="radio" value='M' onChange={(e) => setSize(e.target.value)} checked={size === 'M'} />
                 <span>M</span>
-                <Price price={props.item.pm} />
+                <Price price={priceM} />(税込)
             </label>
             <label>
                 <input type="radio" value='L' onChange={(e) => setSize(e.target.value)} checked={size === 'L'} />
                 <span>L</span>
-                <Price price={props.item.pl} />
+                <Price price={priceL} />(税込)
             </label>
             <p>
                 数量：
@@ -82,7 +84,7 @@ const Itemdetail: NextPage<Props> = (props) => {
             </p>
             <p>
                 ご注文金額　合計：
-                <Price price={total} />
+                <Price price={total} />(税込)
             </p>
             <Btn text='カートに入れる' 
             classname='flex items-center shadow border-blue-500 border-2 rounded-full  px-4 py-2 text-blue-500 hover:bg-blue-500 hover:text-white'
